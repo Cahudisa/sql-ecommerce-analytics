@@ -1,0 +1,26 @@
+# Data (raw CSVs are too large for Git — download from Kaggle)
+data/raw/*
+!data/raw/.gitkeep
+
+# Python
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Environment / secrets
+.env
+
+# dbt
+dbt_project/target/
+dbt_project/dbt_packages/
+dbt_project/logs/
+logs/
+
+# Power BI temp files
+*.pbix.bak
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
