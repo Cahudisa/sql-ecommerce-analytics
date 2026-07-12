@@ -1,0 +1,15 @@
+# Connection profile for local development.
+# Kept in the repo on purpose: local-only database with public data, no real secrets.
+
+olist_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      port: 5432
+      user: olist
+      password: olist_local_dev
+      dbname: ecommerce
+      schema: analytics        # default schema for dbt objects
+      threads: 4
