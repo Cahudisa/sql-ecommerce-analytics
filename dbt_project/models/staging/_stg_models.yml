@@ -59,3 +59,71 @@ models:
         description: "Two-letter Brazilian state code, uppercased."
         data_tests:
           - not_null
+
+  - name: stg_sellers
+    description: "One row per seller. Standardized city/state casing."
+    columns:
+      - name: seller_id
+        description: "Unique seller identifier."
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_products
+    description: "One row per product. Integer-typed measurements. Category may be NULL (~610 products)."
+    columns:
+      - name: product_id
+        description: "Unique product identifier."
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_order_payments
+    description: "One row per payment within an order (payment_sequential distinguishes them)."
+    columns:
+      - name: order_id
+        description: "Order being paid. Not unique: one order can have several payments."
+        data_tests:
+          - not_null
+      - name: payment_value
+        description: "Amount paid in BRL, numeric(10,2)."
+        data_tests:
+          - not_null
+      - name: payment_type
+        description: "Payment method, lowercased."
+        data_tests:
+          - accepted_values:
+              values:
+                - credit_card
+                - boleto
+                - voucher
+                - debit_card
+                - not_defined
+
+  - name: stg_order_reviews
+    description: "One row per review. Deduplicated from raw (review_id repeated) keeping the latest answer."
+    columns:
+      - name: review_id
+        description: "Unique after deduplication via ROW_NUMBER()."
+        data_tests:
+          - unique
+          - not_null
+      - name: order_id
+        description: "Order being reviewed."
+        data_tests:
+          - not_null
+      - name: review_score
+        description: "1-5 rating."
+        data_tests:
+          - accepted_values:
+              values: [1, 2, 3, 4, 5]
+              quote: false
+
+  - name: stg_product_category_translation
+    description: "Lookup: product category names, Portuguese to English."
+    columns:
+      - name: product_category_name
+        description: "Category name in Portuguese (join key to stg_products)."
+        data_tests:
+          - unique
+          - not_null
