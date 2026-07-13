@@ -10,9 +10,11 @@ models:
           - unique
           - not_null
       - name: customer_id
+        description: "Customer-order identifier (FK to stg_customers)."
         data_tests:
           - not_null
       - name: order_status
+        description: "Order lifecycle status, lowercased."
         data_tests:
           - accepted_values:
               values:
@@ -24,3 +26,36 @@ models:
                 - delivered
                 - canceled
                 - unavailable
+
+  - name: stg_order_items
+    description: "One row per item within an order. Typed dates and monetary values."
+    columns:
+      - name: order_id
+        description: "Order this item belongs to. Not unique: an order can have many items."
+        data_tests:
+          - not_null
+      - name: product_id
+        description: "Product sold in this line item."
+        data_tests:
+          - not_null
+      - name: price
+        description: "Item price in BRL, numeric(10,2)."
+        data_tests:
+          - not_null
+
+  - name: stg_customers
+    description: "One row per customer-order pairing. customer_unique_id identifies the real person."
+    columns:
+      - name: customer_id
+        description: "Unique per order (PK). Joins to stg_orders."
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_unique_id
+        description: "Identifies the real person across multiple orders."
+        data_tests:
+          - not_null
+      - name: customer_state
+        description: "Two-letter Brazilian state code, uppercased."
+        data_tests:
+          - not_null
