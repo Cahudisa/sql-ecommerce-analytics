@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: "One row per delivered order with customer identity, value and delivery metrics."
+    columns:
+      - name: order_id
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_unique_id
+        data_tests:
+          - not_null
+      - name: total_order_value
+        data_tests:
+          - not_null
