@@ -1,6 +1,8 @@
 -- Gold layer: monthly cohort retention
 -- Cohort = month of a customer's FIRST purchase (by customer_unique_id, the real person).
 -- One row per (cohort_month, months_since_first) with retention percentage.
+-- FINDING: Olist behaves as a one-time purchase marketplace — monthly retention
+-- never exceeds ~0.5%.
 
 WITH first_purchase AS (
 

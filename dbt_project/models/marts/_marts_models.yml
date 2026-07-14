@@ -5,13 +5,16 @@ models:
     description: "One row per delivered order with customer identity, value and delivery metrics."
     columns:
       - name: order_id
+        description: "Unique order identifier."
         data_tests:
           - unique
           - not_null
       - name: customer_unique_id
+        description: "Real person behind the order (used for cohorts and RFM)."
         data_tests:
           - not_null
       - name: total_order_value
+        description: "Items + freight, in BRL."
         data_tests:
           - not_null
 
@@ -33,5 +36,36 @@ models:
         data_tests:
           - not_null
       - name: retention_pct
+        data_tests:
+          - not_null
+
+  - name: mart_rfm_segments
+    description: "RFM segmentation per customer with NTILE(5) scores and business labels."
+    columns:
+      - name: customer_unique_id
+        data_tests:
+          - unique
+          - not_null
+      - name: rfm_segment
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Champions
+                - Loyal Customers
+                - Recent Customers
+                - At Risk
+                - Big Spenders Lost
+                - Lost
+                - Regular
+
+  - name: mart_delivery_performance
+    description: "Delivery KPIs per Brazilian state: late rate, avg/median delivery days."
+    columns:
+      - name: customer_state
+        data_tests:
+          - unique
+          - not_null
+      - name: late_pct
         data_tests:
           - not_null

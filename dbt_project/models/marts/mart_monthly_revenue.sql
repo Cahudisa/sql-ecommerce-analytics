@@ -5,10 +5,10 @@ WITH monthly AS (
 
     SELECT
         purchase_month,
-        COUNT(*)                          AS total_orders,
+        COUNT(*)                           AS total_orders,
         COUNT(DISTINCT customer_unique_id) AS unique_customers,
-        SUM(total_order_value)            AS revenue,
-        AVG(total_order_value)            AS avg_order_value
+        SUM(total_order_value)             AS revenue,
+        AVG(total_order_value)             AS avg_order_value
     FROM {{ ref('fct_orders') }}
     GROUP BY purchase_month
 
