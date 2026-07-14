@@ -14,7 +14,7 @@ models:
       - name: total_order_value
         data_tests:
           - not_null
-          
+
   - name: mart_monthly_revenue
     description: "Monthly revenue KPIs with MoM growth and cumulative revenue."
     columns:
@@ -23,5 +23,15 @@ models:
           - unique
           - not_null
       - name: revenue
+        data_tests:
+          - not_null
+
+  - name: mart_cohort_retention
+    description: "Monthly cohorts: % of customers returning N months after first purchase."
+    columns:
+      - name: cohort_month
+        data_tests:
+          - not_null
+      - name: retention_pct
         data_tests:
           - not_null
